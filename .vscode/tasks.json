@@ -1,0 +1,111 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "CMake Configure",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "-B", "build",
+        "-S", ".",
+        "-G", "Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "CMake Build only",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "build: asan",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake -S . -B build-asan -G Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_C_FLAGS=\"-fsanitize=address -fno-omit-frame-pointer -O1 -g\"",
+        "-DCMAKE_CXX_FLAGS=\"-fsanitize=address -fno-omit-frame-pointer -O1 -g\"",
+        "-DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address\"",
+        "&& cmake --build build-asan"
+      ],
+      "group": "build",
+      "problemไมMatcher": "$gcc",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "build: tsan",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake -S . -B build-tsan -G Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_C_FLAGS=\"-fsanitize=thread -O1 -g\"",
+        "-DCMAKE_CXX_FLAGS=\"-fsanitize=thread -O1 -g\"",
+        "-DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=thread\"",
+        "&& cmake --build build-tsan"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "build: ubsan",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake -S . -B build-ubsan -G Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_C_FLAGS=\"-fsanitize=undefined -O1 -g\"",
+        "-DCMAKE_CXX_FLAGS=\"-fsanitize=undefined -O1 -g\"",
+        "-DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=undefined\"",
+        "&& cmake --build build-ubsan"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    }
+  ]
+}

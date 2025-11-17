@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "system_error": "cpp"
+    },
+
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.codeAnalysis.clangTidy.args": [
+        "-checks=*",                     // or a more focused set, e.g. bugprone-*,modernize-*,performance-*
+        "-warnings-as-errors=*",         // optional: fail the build on warnings
+        "--header-filter=.*"             // analyze your own headers too
+    ],
+    // Optional: run clang-tidy automatically as a task instead of on-save
+    "C_Cpp.autocomplete": "default",
+    "C_Cpp.errorSquiggles": "enabled"
+}
