@@ -10,6 +10,8 @@ include(CMake/glad.cmake)
 
 add_executable(solitaire
         Game/main.cpp
+        Game/window.cpp
+        Game/window.hpp
 )
 
 target_link_libraries(solitaire
