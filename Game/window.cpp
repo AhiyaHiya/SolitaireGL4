@@ -1,7 +1,5 @@
 #include "window.hpp"
 
-#include <GLFW/glfw3.h> 
-
 auto create_window(std::int32_t width, std::int32_t height, std::string_view title)
     -> std::expected<std::shared_ptr<GLFWwindow>, std::pair<error_code_t, error_message_t>>
 {
