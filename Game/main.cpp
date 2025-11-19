@@ -1,7 +1,7 @@
 #include "window.hpp"
 
-#include <GLFW/glfw3.h> // Ordering is important and this file must be included after glad
 #include <glad/gl.h>
+#include <GLFW/glfw3.h> // Ordering is important and this file must be included after glad
 #include <glm/glm.hpp>
 
 #include <iostream>
