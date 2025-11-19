@@ -9,6 +9,8 @@ find_package(glfw3  CONFIG REQUIRED)
 include(CMake/glad.cmake)
 
 add_executable(solitaire
+        Game/keyboard.cpp
+        Game/keyboard.hpp
         Game/main.cpp
         Game/window.cpp
         Game/window.hpp

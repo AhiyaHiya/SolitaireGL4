@@ -1,8 +1,11 @@
+#include "keyboard.hpp"
 #include "window.hpp"
 
+// clang-format off
 #include <glad/gl.h>
 #include <GLFW/glfw3.h> // Ordering is important and this file must be included after glad
 #include <glm/glm.hpp>
+// clang-format on
 
 #include <iostream>
 
@@ -40,7 +43,21 @@ int main()
     // Successfully loaded OpenGL
     printf("Loaded OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
-    // No Main loop for now
+    // Exit app when ESC is pressed
+    glfwSetKeyCallback(window.get(), key_callback);
+
+    glViewport(0, 0, width, height);
+
+    // Game loop
+    while (!glfwWindowShouldClose(window.get()))
+    {
+        glfwPollEvents();
+
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glfwSwapBuffers(window.get());
+    }
 
     glfwTerminate();
     return 0;
