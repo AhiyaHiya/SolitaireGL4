@@ -5,7 +5,7 @@
 
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "C_Cpp.codeAnalysis.clangTidy.args": [
-        "-checks=*",                     // or a more focused set, e.g. bugprone-*,modernize-*,performance-*
+        "-checks=*, -fuchsia-*",         // or a more focused set, e.g. bugprone-*,modernize-*,performance-*
         "-warnings-as-errors=*",         // optional: fail the build on warnings
         "--header-filter=.*"             // analyze your own headers too
     ],
