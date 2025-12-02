@@ -82,7 +82,7 @@ auto load_png_data() -> std::expected< std::shared_ptr< asset_image >, std::stri
 {
     // Set up the asset path
     auto current_working_path = std::filesystem::current_path();
-    auto cards_path           = current_working_path / "Assets/Cards2.png";
+    auto cards_path           = current_working_path / "Assets/cards.png";
     if (!std::filesystem::exists(cards_path))
     {
         return std::unexpected("Cards PNG file not found at path: " + cards_path.string());
