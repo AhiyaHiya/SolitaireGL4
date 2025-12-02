@@ -36,8 +36,8 @@ bool load_card_textures()
     auto json_data = json_data_result.value();
 
     // --------------------------- Create OpenGL texture array ---------------------------
-    auto card_texture_array = GLuint();
-    constexpr auto texture_count = GLsizei(1);
+    auto           card_texture_array = GLuint();
+    constexpr auto texture_count      = GLsizei(1);
     glGenTextures(texture_count, &card_texture_array);
     glBindTexture(GL_TEXTURE_2D_ARRAY, card_texture_array);
 
@@ -48,10 +48,11 @@ bool load_card_textures()
     for (const auto& [index, entry] : std::views::enumerate(json_data["frames"].items()))
     {
         const auto& [card_name, frame_data] = entry;
-        const auto x = frame_data["x"].get< int >();
-        const auto y = frame_data["y"].get< int >();
-        const auto w = frame_data["w"].get< int >();
-        const auto h = frame_data["h"].get< int >();
+
+        const auto x = frame_data["x"].get<int>();
+        const auto y = frame_data["y"].get<int>();
+        const auto w = frame_data["w"].get<int>();
+        const auto h = frame_data["h"].get<int>();
 
         // Load texture
         auto pixel_data = asset_image->stride_of_data_at(x, y);
@@ -61,7 +62,7 @@ bool load_card_textures()
     return true;
 }
 
-auto load_json_data() -> std::expected< nlohmann::json, std::string >
+auto load_json_data() -> std::expected<nlohmann::json, std::string>
 {
     // Load JSON data from file
     auto current_working_path = std::filesystem::current_path();
@@ -78,7 +79,7 @@ auto load_json_data() -> std::expected< nlohmann::json, std::string >
     }
 }
 
-auto load_png_data() -> std::expected< std::shared_ptr< asset_image >, std::string >
+auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, std::string>
 {
     // Set up the asset path
     auto current_working_path = std::filesystem::current_path();
@@ -97,6 +98,6 @@ auto load_png_data() -> std::expected< std::shared_ptr< asset_image >, std::stri
     }
 
     // Wrap the data and the image info in the asset_image object
-    auto data_ptr = std::shared_ptr< stbi_uc >(raw_data, stbi_image_free);
-    return std::make_shared< asset_image >(data_ptr, width, height, channels);
+    auto data_ptr = std::shared_ptr<stbi_uc>(raw_data, stbi_image_free);
+    return std::make_shared<asset_image>(data_ptr, width, height, channels);
 }
