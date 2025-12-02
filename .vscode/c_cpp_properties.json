@@ -3,10 +3,10 @@
     {
       "name": "Linux",
       "compileCommands": "${workspaceFolder}/build/compile_commands.json",
-      "compilerPath": "/usr/bin/clang",
+      "compilerPath": "/usr/local/gcc-15/bin/g++",
       "cppStandard": "c++23",
       "cStandard": "c17",
-      "intelliSenseMode": "linux-clang-x64",
+      "intelliSenseMode": "linux-gcc-x64",
       "compilerArgs": ["-std=c++23"]
     }
   ],
