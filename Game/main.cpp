@@ -1,3 +1,4 @@
+#include "cards.hpp"
 #include "keyboard.hpp"
 #include "window.hpp"
 
@@ -42,6 +43,14 @@ int main()
 
     // Successfully loaded OpenGL
     printf("Loaded OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+
+    // Load up the assets
+    if (!load_card_textures())
+    {
+        // TODO: convert to spdlog logging
+        std::cerr << "Failed to load card textures\n";
+        return 1;
+    }
 
     // Exit app when ESC is pressed
     glfwSetKeyCallback(window.get(), key_callback);
