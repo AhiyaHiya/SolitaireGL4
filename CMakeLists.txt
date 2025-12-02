@@ -23,8 +23,14 @@ include(${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
 include(CMake/glad.cmake)
 include(CMake/stb.cmake)
 CPMAddPackage("gh:nlohmann/json@3.11.3")
+CPMAddPackage("gh:google/googletest@1.17.0")
+
+# --------------------- Executable ---------------------
+set(game_base_directory ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(solitaire
+        Game/cards.cpp
+        Game/cards.hpp
         Game/keyboard.cpp
         Game/keyboard.hpp
         Game/main.cpp
@@ -42,4 +48,17 @@ target_link_libraries(solitaire
 
         nlohmann_json::nlohmann_json
 )
+
+# --------------------- Tests ---------------------
+enable_testing()
+include(GoogleTest)
+add_subdirectory(Game/Tests)
+
+# --------------------- Copy assets ---------------------
+add_custom_command(
+    TARGET solitaire POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/Assets
+            $<TARGET_FILE_DIR:solitaire>/Assets
+    COMMENT "Copying Assets folder to output directory"
 )

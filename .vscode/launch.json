@@ -39,6 +39,19 @@
       "request": "launch",
       "program": "${workspaceFolder}/build-ubsan/solitaire",
       "preLaunchTask": "build: ubsan"
+    },
+    {
+      "name": "Run Tests (LLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Game/Tests/cards_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "sourceLanguages": [
+        "cpp"
+      ],
+      "preLaunchTask": "build"
     }
   ]
 }
