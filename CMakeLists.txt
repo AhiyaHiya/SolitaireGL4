@@ -49,6 +49,11 @@ target_link_libraries(solitaire
         nlohmann_json::nlohmann_json
 )
 
+target_link_options(solitaire
+    PRIVATE
+        "-Wl,-rpath,/usr/local/gcc-15/lib64"
+)
+
 # --------------------- Tests ---------------------
 enable_testing()
 include(GoogleTest)
