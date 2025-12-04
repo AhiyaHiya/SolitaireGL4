@@ -3,16 +3,28 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
+// clang-format off
+#include <glad/gl.h>
+// clang-format on
+
 #include <cstdint>
 #include <expected>
 #include <memory>
+#include <string_view>
 
 class asset_image
 {
 public:
     asset_image(std::shared_ptr<stbi_uc> data,
-        std::int32_t width, std::int32_t height, std::int32_t channels)
-        : data_(data), width_(width), height_(height), channels_(channels) {}
+                std::int32_t             width,
+                std::int32_t             height,
+                std::int32_t             channels)
+        : data_(data)
+        , width_(width)
+        , height_(height)
+        , channels_(channels)
+    {
+    }
 
     auto data() const -> std::shared_ptr<stbi_uc> { return data_; }
     auto width() const -> std::int32_t { return width_; }
@@ -26,13 +38,19 @@ public:
 
 private:
     std::shared_ptr<stbi_uc> data_;
-    std::int32_t width_;
-    std::int32_t height_;
-    std::int32_t channels_;
+    std::int32_t             width_;
+    std::int32_t             height_;
+    std::int32_t             channels_;
 };
+
+// Returns shader id or error message
+auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, std::string>;
 
 // True if loading card textures succeeded, false otherwise
 bool load_card_textures();
 
 auto load_json_data() -> std::expected<nlohmann::json, std::string>;
 auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, std::string>;
+
+// For Shaders
+auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, std::string>;

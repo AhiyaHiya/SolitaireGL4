@@ -3,13 +3,58 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-// clang-format off
-#include <glad/gl.h>
-// clang-format on
-
 #include <filesystem>
 #include <fstream>
 #include <ranges>
+
+// TODO: Clean up implementation
+auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, std::string>
+{
+    // Make sure the file exists
+    if (!std::filesystem::exists(path))
+    {
+        return std::unexpected("File does not exist: " + path.string());
+    }
+
+    // Attempt to open the file
+    auto file_stream = std::ifstream(path, std::ios::in);
+    if (!file_stream.is_open())
+    {
+        return std::unexpected("Failed to open file: " + path.string());
+    }
+    // Seek to the end to get the size
+    file_stream.seekg(0, std::ios::end);
+
+    // Set up a new string object to hold the content
+    const auto size    = file_stream.tellg();
+    auto       content = std::string(size, '\0');
+
+    // Bring the reader back to the beginning of the file and read the content
+    file_stream.seekg(0);
+    file_stream.read(content.data(), size);
+    return content;
+}
+
+auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, std::string> // shader id
+{
+    auto current_working_path = std::filesystem::current_path();
+    auto shader_path          = current_working_path / shader_relative_path;
+
+    auto content_result = read_file_content(shader_path);
+    if (!content_result.has_value())
+    {
+        return std::unexpected("Failed to read shader file: " + std::string(shader_relative_path));
+    }
+    auto shader_source = content_result.value();
+
+    auto           shader_id      = glCreateShader(shader_type);
+    constexpr auto shader_count   = 1;
+    const GLchar*  shader_src_ptr = shader_source.c_str();
+    glShaderSource(shader_id, shader_count, &shader_src_ptr, nullptr);
+    glCompileShader(shader_id);
+
+    return shader_id;
+}
 
 bool load_card_textures()
 {
