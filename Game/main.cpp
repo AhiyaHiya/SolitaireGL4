@@ -18,14 +18,16 @@ auto compile_shaders() -> std::expected<std::pair<GLuint, GLuint>, std::string>
     auto vertex_compiled_result = compile_card_shader(vertex_shader_path, GL_VERTEX_SHADER);
     if (!vertex_compiled_result)
     {
-        return std::unexpected("Failed to compile vertex shader: " + vertex_compiled_result.error());
+        return std::unexpected("Failed to compile vertex shader: " +
+                               vertex_compiled_result.error());
     }
     auto vertex_shader_id = vertex_compiled_result.value();
 
     auto fragment_compiled_result = compile_card_shader(fragment_shader_path, GL_FRAGMENT_SHADER);
     if (!fragment_compiled_result)
     {
-        return std::unexpected("Failed to compile fragment shader: " + fragment_compiled_result.error());
+        return std::unexpected("Failed to compile fragment shader: " +
+                               fragment_compiled_result.error());
     }
     auto fragment_shader_id = fragment_compiled_result.value();
 
@@ -53,7 +55,8 @@ auto init_window(const std::int32_t width, const std::int32_t height) -> std::ex
     return window;
 }
 
-auto link_shader_program(GLuint vertex_shader_id, GLuint fragment_shader_id) -> std::expected<GLuint, std::string>
+auto link_shader_program(GLuint vertex_shader_id, GLuint fragment_shader_id)
+    -> std::expected<GLuint, std::string>
 {
     auto program_id = glCreateProgram();
     glAttachShader(program_id, vertex_shader_id);
@@ -64,9 +67,9 @@ auto link_shader_program(GLuint vertex_shader_id, GLuint fragment_shader_id) -> 
     glGetProgramiv(program_id, GL_LINK_STATUS, &program_linked);
     if (program_linked != GL_TRUE)
     {
-        auto log_length = GLsizei(0);
-        const auto size = 1024;
-        auto err_message = std::string(size, '\0');
+        auto       log_length  = GLsizei(0);
+        const auto size        = 1024;
+        auto       err_message = std::string(size, '\0');
         glGetProgramInfoLog(program_id, size, &log_length, err_message.data());
         return std::unexpected(err_message);
     }
@@ -90,17 +93,17 @@ auto load_opengl() -> std::pair<bool, std::string>
 // Empty implementation
 int main()
 {
-    constexpr auto width  = 1400;
-    constexpr auto height = 1000;
-    auto window_result = init_window(width, height);
-    if(!window_result)
+    constexpr auto width         = 1400;
+    constexpr auto height        = 1000;
+    auto           window_result = init_window(width, height);
+    if (!window_result)
     {
         std::cerr << window_result.error() << std::endl;
         return 1;
     }
     auto window = window_result.value();
 
-    if(auto [success, error_message] = load_opengl(); !success)
+    if (auto [success, error_message] = load_opengl(); !success)
     {
         std::cerr << error_message << std::endl;
         return 1;
@@ -127,7 +130,7 @@ int main()
     glDeleteShader(vertex_shader_id);
     glDeleteShader(fragment_shader_id);
     glUseProgram(program_id);
-    
+
     // Load up the assets
     if (!load_card_textures())
     {
