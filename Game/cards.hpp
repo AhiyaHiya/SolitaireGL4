@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAME_CARDS_HPP__
+#define _GAME_CARDS_HPP__
 
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
@@ -54,3 +55,4 @@ auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, std::string>
 
 // For Shaders
 auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, std::string>;
+#endif // _GAME_CARDS_HPP__

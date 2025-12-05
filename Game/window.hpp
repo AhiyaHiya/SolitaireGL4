@@ -1,4 +1,7 @@
-#pragma once
+#ifndef _GAME_WINDOW_HPP__
+#define _GAME_WINDOW_HPP__
+
+#include "types.hpp"
 
 // clang-format off
 #include <glad/gl.h>
@@ -17,3 +20,5 @@ struct GLFWwindow;
 
 auto create_window(std::int32_t width, std::int32_t height, std::string_view title) 
     ->std::expected< std::shared_ptr< GLFWwindow >, std::pair< error_code_t, error_message_t > >;
+
+#endif // _GAME_WINDOW_HPP__
