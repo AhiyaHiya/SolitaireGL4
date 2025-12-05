@@ -1,5 +1,6 @@
 #include "cards.hpp"
 #include "keyboard.hpp"
+#include "types.hpp"
 #include "window.hpp"
 
 // clang-format off
@@ -10,7 +11,7 @@
 
 #include <iostream>
 
-auto compile_shaders() -> std::expected<std::pair<GLuint, GLuint>, std::string>
+auto compile_shaders() -> std::expected<std::pair<GLuint, GLuint>, error_message_t>
 {
     const auto vertex_shader_path   = std::string("Shaders/card.vert");
     const auto fragment_shader_path = std::string("Shaders/card.frag");
@@ -56,7 +57,7 @@ auto init_window(const std::int32_t width, const std::int32_t height) -> std::ex
 }
 
 auto link_shader_program(GLuint vertex_shader_id, GLuint fragment_shader_id)
-    -> std::expected<GLuint, std::string>
+    -> std::expected<GLuint, error_message_t>
 {
     auto program_id = glCreateProgram();
     glAttachShader(program_id, vertex_shader_id);
@@ -77,7 +78,7 @@ auto link_shader_program(GLuint vertex_shader_id, GLuint fragment_shader_id)
     return program_id;
 }
 
-auto load_opengl() -> std::pair<bool, std::string>
+auto load_opengl() -> std::pair<bool, error_message_t>
 {
     const auto version = gladLoadGL(glfwGetProcAddress);
     if (version == 0)

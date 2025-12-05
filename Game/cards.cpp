@@ -8,7 +8,7 @@
 #include <ranges>
 
 // TODO: Clean up implementation
-auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, std::string>
+auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, error_message_t>
 {
     // Make sure the file exists
     if (!std::filesystem::exists(path))
@@ -35,7 +35,7 @@ auto read_file_content(const std::filesystem::path& path) -> std::expected<std::
     return content;
 }
 
-auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, std::string> // shader id
+auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, error_message_t> // shader id
 {
     auto current_working_path = std::filesystem::current_path();
     auto shader_path          = current_working_path / shader_relative_path;
@@ -107,7 +107,7 @@ bool load_card_textures()
     return true;
 }
 
-auto load_json_data() -> std::expected<nlohmann::json, std::string>
+auto load_json_data() -> std::expected<nlohmann::json, error_message_t>
 {
     // Load JSON data from file
     auto current_working_path = std::filesystem::current_path();
@@ -124,7 +124,7 @@ auto load_json_data() -> std::expected<nlohmann::json, std::string>
     }
 }
 
-auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, std::string>
+auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, error_message_t>
 {
     // Set up the asset path
     auto current_working_path = std::filesystem::current_path();

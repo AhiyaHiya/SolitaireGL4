@@ -1,6 +1,8 @@
 #ifndef _GAME_CARDS_HPP__
 #define _GAME_CARDS_HPP__
 
+#include "types.hpp"
+
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
@@ -45,14 +47,14 @@ private:
 };
 
 // Returns shader id or error message
-auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, std::string>;
+auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, error_message_t>;
 
 // True if loading card textures succeeded, false otherwise
 bool load_card_textures();
 
-auto load_json_data() -> std::expected<nlohmann::json, std::string>;
-auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, std::string>;
+auto load_json_data() -> std::expected<nlohmann::json, error_message_t>;
+auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, error_message_t>;
 
 // For Shaders
-auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, std::string>;
+auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, error_message_t>;
 #endif // _GAME_CARDS_HPP__
