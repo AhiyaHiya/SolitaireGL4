@@ -35,14 +35,15 @@ auto compile_shaders() -> std::expected<std::pair<GLuint, GLuint>, error_message
     return std::make_pair(vertex_shader_id, fragment_shader_id);
 }
 
-// Returns true/false, error message
-auto init_window(const std::int32_t width, const std::int32_t height) -> std::expected<std::shared_ptr<GLFWwindow>, std::string>
 {
-    if (!glfwInit())
-    {
-        return std::unexpected("Failed to initialize GLFW");
-    }
 
+// ----------------------------------------------------------------
+/// Creates window, makes context current
+/// On failure, returns unexpected with error message
+/// On success, returns shared_ptr to GLFWwindow
+auto create_windows_set_context(const std::int32_t width, const std::int32_t height)
+    -> std::expected<std::shared_ptr<GLFWwindow>, error_message_t>
+{
     auto result = create_window(width, height, "Solitaire");
     if (!result)
     {
@@ -94,9 +95,14 @@ auto load_opengl() -> std::pair<bool, error_message_t>
 // Empty implementation
 int main()
 {
+    if (!glfwInit())
+    {
+        std::cerr << "Failed to initialize GLFW\n";
+        return 1;
+    }
     constexpr auto width         = 1400;
     constexpr auto height        = 1000;
-    auto           window_result = init_window(width, height);
+    auto           window_result = create_windows_set_context(width, height);
     if (!window_result)
     {
         std::cerr << window_result.error() << std::endl;
