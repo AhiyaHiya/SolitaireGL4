@@ -55,6 +55,7 @@ bool load_card_textures();
 auto load_json_data() -> std::expected<nlohmann::json, error_message_t>;
 auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, error_message_t>;
 
-// For Shaders
-auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, error_message_t>;
+// For reading shader code
+auto read_file_content(const std::filesystem::path& path)
+    -> std::expected<std::string, error_message_t>;
 #endif // _GAME_CARDS_HPP__
