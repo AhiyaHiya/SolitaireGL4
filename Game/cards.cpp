@@ -8,7 +8,8 @@
 #include <ranges>
 
 
-auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, error_message_t> // shader id
+auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type)
+    -> std::expected<GLuint, error_message_t> // shader id
 {
     auto current_working_path = std::filesystem::current_path();
     auto shader_path          = current_working_path / shader_relative_path;
