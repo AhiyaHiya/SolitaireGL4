@@ -92,7 +92,9 @@ auto load_opengl() -> std::pair<bool, error_message_t>
     return {true, ""};
 }
 
-// Empty implementation
+// ----------------------------------------------------------------
+/// @brief No description needed
+/// @return 0 for no error, everything else is error
 int main()
 {
     if (!glfwInit())
