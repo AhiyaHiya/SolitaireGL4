@@ -15,6 +15,7 @@
 #include <memory>
 #include <string_view>
 
+// For holding image data from the large PNG tile map
 class asset_image
 {
 public:
