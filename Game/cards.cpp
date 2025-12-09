@@ -7,33 +7,6 @@
 #include <fstream>
 #include <ranges>
 
-// TODO: Clean up implementation
-auto read_file_content(const std::filesystem::path& path) -> std::expected<std::string, error_message_t>
-{
-    // Make sure the file exists
-    if (!std::filesystem::exists(path))
-    {
-        return std::unexpected("File does not exist: " + path.string());
-    }
-
-    // Attempt to open the file
-    auto file_stream = std::ifstream(path, std::ios::in);
-    if (!file_stream.is_open())
-    {
-        return std::unexpected("Failed to open file: " + path.string());
-    }
-    // Seek to the end to get the size
-    file_stream.seekg(0, std::ios::end);
-
-    // Set up a new string object to hold the content
-    const auto size    = file_stream.tellg();
-    auto       content = std::string(size, '\0');
-
-    // Bring the reader back to the beginning of the file and read the content
-    file_stream.seekg(0);
-    file_stream.read(content.data(), size);
-    return content;
-}
 
 auto compile_card_shader(std::string_view shader_relative_path, GLenum shader_type) -> std::expected<GLuint, error_message_t> // shader id
 {
@@ -145,4 +118,33 @@ auto load_png_data() -> std::expected<std::shared_ptr<asset_image>, error_messag
     // Wrap the data and the image info in the asset_image object
     auto data_ptr = std::shared_ptr<stbi_uc>(raw_data, stbi_image_free);
     return std::make_shared<asset_image>(data_ptr, width, height, channels);
+}
+
+// TODO: Clean up implementation
+auto read_file_content(const std::filesystem::path& path)
+    -> std::expected<std::string, error_message_t>
+{
+    // Make sure the file exists
+    if (!std::filesystem::exists(path))
+    {
+        return std::unexpected("File does not exist: " + path.string());
+    }
+
+    // Attempt to open the file
+    auto file_stream = std::ifstream(path, std::ios::in);
+    if (!file_stream.is_open())
+    {
+        return std::unexpected("Failed to open file: " + path.string());
+    }
+    // Seek to the end to get the size
+    file_stream.seekg(0, std::ios::end);
+
+    // Set up a new string object to hold the content
+    const auto size    = file_stream.tellg();
+    auto       content = std::string(size, '\0');
+
+    // Bring the reader back to the beginning of the file and read the content
+    file_stream.seekg(0);
+    file_stream.read(content.data(), size);
+    return content;
 }
