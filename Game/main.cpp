@@ -78,16 +78,16 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // Set projection (one-time, pixel-perfect bottom-left origin)
-    auto projection = glm::ortho(0.0f,                       // left
-                                 static_cast<float>(width),  // right
-                                 static_cast<float>(height), // bottom
-                                 0.0f,                       // top
-                                 -1.0f,                      // near
-                                 1.0f);                      // far
-    glUniformMatrix4fv(cr->uProjection,                      // location
-                       1,                                    // count
-                       GL_FALSE,                             // transpose
+    // Set projection
+    auto projection = glm::ortho(0.0f, // left
+                                 static_cast<float>(width),
+                                 0.0f,                       // bottom → now 0
+                                 static_cast<float>(height), // top   → now height
+                                 -1.0f,
+                                 1.0f);
+    glUniformMatrix4fv(cr->uProjection, // location
+                       1,               // count
+                       GL_FALSE,        // transpose
                        glm::value_ptr(projection));
 
     // Set texture sampler unit (one-time)

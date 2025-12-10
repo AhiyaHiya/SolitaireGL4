@@ -99,12 +99,15 @@ auto create_vao_vbo() -> std::pair<GLuint, GLuint>
     glGenBuffers(item_count, &vbo_id);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
 
-    auto vertices = std::array<GLfloat, 20>{
-        // Positions       // Texture Coords
-        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Top Right
-        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // Bottom Right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Bottom Left
-        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // Top Left
+    auto vertices = std::array<GLfloat, 30>{
+        // pos x   y    z    u    v
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // TL
+        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // TR
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // BR
+
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // TL (repeat)
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // BR (repeat)
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f  // BL
     };
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
 
